@@ -2,31 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugManager  {
+public class DebugManager {
 
-    static public bool EnableLog = true;
-    static public void Log(object message) {
-        Log( message, null );
-    }
-    static public void Log(object message, Object context) {
+    static public bool EnableLog = true; //控制是否开启Debug
+
+    static public void Log(object _message) {
         if (EnableLog) {
-            Debug.Log( message, context );
+            Log( _message, null );
         }
     }
-    static public void LogError(object message) {
-        LogError( message, null );
-    }
-    static public void LogError(object message, Object context) {
+    static public void Log(object _message, Object _context) {
         if (EnableLog) {
-            Debug.LogError( message, context );
+            Debug.Log( _message, _context );
         }
     }
-    static public void LogWarning(object message) {
-        LogWarning( message, null );
-    }
-    static public void LogWarning(object message, Object context) {
+
+    static public void LogError(object _message) {
         if (EnableLog) {
-            Debug.LogWarning( message, context );
+            LogError( _message, null );
+        }
+    }
+    static public void LogError(object _message, Object _context) {
+        if (EnableLog) {
+            Debug.LogError( _message, _context );
+        }
+    }
+
+    static public void LogWarning(object _message) {
+        if (EnableLog) {
+            LogWarning( _message, null );
+        }
+    }
+    static public void LogWarning(object _message, Object _context) {
+        if (EnableLog) {
+            Debug.LogWarning( _message, _context );
         }
     }
 
