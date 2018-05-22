@@ -287,10 +287,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Game\CameraFollower.cs" />
-    <Compile Include="Assets\Scripts\Game\MapGenerator.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\MapChecker.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\MapGenerator.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\MapManager.cs" />
     <Compile Include="Assets\Scripts\Game\Player.cs" />
     <Compile Include="Assets\Scripts\Tools\BlockSixSideRender.cs" />
+    <Compile Include="Assets\Scripts\Tools\BlockSixSideRenderOne.cs" />
     <Compile Include="Assets\Scripts\Tools\DebugManager.cs" />
+    <Compile Include="Assets\Scripts\Tools\NoticeManager.cs" />
     <Compile Include="Assets\Scripts\Tools\PerlinNoiseGenerator.cs" />
     <Compile Include="Assets\Scripts\Tools\StrManager.cs" />
     <Compile Include="Assets\Scripts\UI\StartGamePanel.cs" />

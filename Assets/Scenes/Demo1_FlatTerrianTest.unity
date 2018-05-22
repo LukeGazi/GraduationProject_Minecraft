@@ -364,8 +364,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1850282967}
   - component: {fileID: 1850282966}
+  - component: {fileID: 1850282968}
   m_Layer: 0
-  m_Name: GenerateCnterPoint
+  m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -382,10 +383,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6b396b8a0df04459e21cbd3e54f919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerTrans: {fileID: 1419678283}
   Block:
-  - {fileID: 1650020335839706, guid: 60bd36fa97d354640bd48f3388240bba, type: 2}
-  m_mapWidth: 150
-  m_mapHeight: 5
+  - {fileID: 1049515985194534, guid: 01d30a8c90176574f93903ae4fd12589, type: 2}
   GenerateType: 2
   m_relief: 20
 --- !u!4 &1850282967
@@ -401,6 +401,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1850282968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1850282965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 601ebfde2d2b94b429fdd35b54110aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerTrans: {fileID: 1419678283}
 --- !u!1 &1998987682
 GameObject:
   m_ObjectHideFlags: 0

@@ -66,9 +66,59 @@ public class Player : MonoBehaviour {
     }
     #endregion
 
+    public MapHorizontalDirection GetPlayerDirection() {
+
+        if (m_direction.z >= 1) {
+            if (m_direction.x >= 1) {
+                return MapHorizontalDirection.FRONT_AND_RIGHT;
+            }
+            if (m_direction.x <= -1) {
+                return MapHorizontalDirection.FRONT_AND_LEFT;
+            }
+            return MapHorizontalDirection.FRONT;
+        }
+        if (m_direction.z <= -1) {
+            if (m_direction.x >= 1) {
+                return MapHorizontalDirection.BACK_AND_RIGHT;
+            }
+            if (m_direction.x <= -1) {
+                return MapHorizontalDirection.BACK_AND_LEFT;
+            }
+            return MapHorizontalDirection.BACK;
+        }
+        if (m_direction.x >= 1) {
+            return MapHorizontalDirection.RIGHT;
+        }
+        if (m_direction.x <= -1) {
+            return MapHorizontalDirection.LEFT;
+        }
+
+        return MapHorizontalDirection.None;
+    }
+
+    private Vector3 m_oldPosition = Vector3.zero;
+    private Vector3 m_direction;
+
+    /// <summary>
+    /// 计算方向，以一个block为单位
+    /// </summary>
+    private void CalcDirection() {
+        m_direction = transform.position - m_oldPosition;
+        if (m_direction.x - m_oldPosition.x >= 1 || m_direction.x - m_oldPosition.x <= -1) {
+            m_oldPosition.x = m_direction.x;
+        }
+        if (m_direction.z - m_oldPosition.z >= 1 || m_direction.z - m_oldPosition.z <= 1) {
+            m_oldPosition.z = m_direction.z;
+        }
+    }
+
     // Update is called once per frame
     private void Update() {
         MovePlayer();
         RotatePlayer();
+    }
+
+    private void LateUpdate() {
+        CalcDirection();
     }
 }
