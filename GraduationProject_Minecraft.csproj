@@ -293,6 +293,7 @@
     <Compile Include="Assets\Scripts\Game\Player\CameraFollower.cs" />
     <Compile Include="Assets\Scripts\Game\Player\CameraViewManager.cs" />
     <Compile Include="Assets\Scripts\Game\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Game\World\WorldManager.cs" />
     <Compile Include="Assets\Scripts\Tools\Common\DebugManager.cs" />
     <Compile Include="Assets\Scripts\Tools\Common\KeyValueList.cs" />
     <Compile Include="Assets\Scripts\Tools\Common\NoticeManager.cs" />
@@ -303,12 +304,14 @@
     <Compile Include="Assets\Scripts\UI\Common\BackBtn.cs" />
     <Compile Include="Assets\Scripts\UI\Common\CanvasInfos.cs" />
     <Compile Include="Assets\Scripts\UI\Common\HidenPanelUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\RunPanelUI.cs" />
     <Compile Include="Assets\Scripts\UI\Common\UIInfoManager.cs" />
     <Compile Include="Assets\Scripts\UI\OptionUI\AudioScrollbar.cs" />
     <Compile Include="Assets\Scripts\UI\OptionUI\OptionPanelUI.cs" />
     <Compile Include="Assets\Scripts\UI\OptionUI\SpecifyAudioPanelUI.cs" />
     <Compile Include="Assets\Scripts\UI\OptionUI\ViewFieldSlider.cs" />
     <Compile Include="Assets\Scripts\UI\SingleGameUI\SingleGamePanelUI.cs" />
+    <Compile Include="Assets\Scripts\UI\SingleGameUI\StartGameBtn.cs" />
     <Compile Include="Assets\Scripts\UI\StartUI\BackgroundUI.cs" />
     <Compile Include="Assets\Scripts\UI\StartUI\OptionBtn.cs" />
     <Compile Include="Assets\Scripts\UI\StartUI\QuitBtn.cs" />

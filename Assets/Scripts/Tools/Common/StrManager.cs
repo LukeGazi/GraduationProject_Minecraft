@@ -34,6 +34,8 @@ public class StrManager {
     //Panel Shrink
     public static string SPECIFY_AUDIO_PANEL_SHOW_NOTICE = "Specify audio panel show";
     public static string SPECIFY_AUDIO_PANEL_HIDE_NOTICE = "Specify audio panel hide";
+    //Load Scene
+    public static string LOAD_SCENE_NOTICE = "Load Scene";
     #endregion
 
     #region DEBUG

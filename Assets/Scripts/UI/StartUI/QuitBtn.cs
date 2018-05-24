@@ -16,6 +16,9 @@ public class QuitBtn : StartPanelButtonUI {
     /// </summary>
     /// <param name="eventData"></param>
     public override void OnPointerClick(PointerEventData eventData) {
+        if (UIInfoManager.Instance.IsAnimationPlaying) {
+            return;
+        }
         base.OnPointerClick( eventData );
         //Debug模式下无法退出，Debug文字进行测试
         Debug.Log( StrManager.DEBUG_QUIT_APPLICATION );

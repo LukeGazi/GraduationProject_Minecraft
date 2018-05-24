@@ -249,6 +249,7 @@ public class StartPanelButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerE
             yield return null;
         }
         GetRectTransform.localPosition = endPosition;
+        CancelAnimationPlayingFlag();
         yield return null;
     }
 
@@ -258,7 +259,6 @@ public class StartPanelButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerE
     private void DisableButton() {
         GetRectTransform.localScale *= UIInfoManager.Instance.ButtonHoverEnlargeTime;
         GetComponent<Button>().interactable = false;
-        CancelAnimationPlayingFlag();
     }
     /// <summary>
     /// 恢复按钮的可用性，动画运行结束后调用
@@ -266,7 +266,6 @@ public class StartPanelButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerE
     private void EnableButton() {
         GetRectTransform.localScale = Vector3.one;
         GetComponent<Button>().interactable = true;
-        CancelAnimationPlayingFlag();
     }
     /// <summary>
     /// 取消协程动画播放标记，即可以进行下次协程动画的播放
@@ -287,6 +286,7 @@ public class StartPanelButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerE
             yield return null;
         }
         ModifyAfterBack();
+        CancelAnimationPlayingFlag();
         yield return null;
     }
     /// <summary>

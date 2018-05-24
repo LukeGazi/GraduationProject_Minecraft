@@ -19,13 +19,13 @@ public class OptionBtn : StartPanelButtonUI {
     /// </summary>
     /// <param name="eventData"></param>
     public override void OnPointerClick(PointerEventData eventData) {
-        base.OnPointerClick( eventData );
         if (!GetInteractable) {
             return;
         }
         if (UIInfoManager.Instance.IsAnimationPlaying) {
             return;
         }
+        base.OnPointerClick( eventData );
         UIInfoManager.Instance.IsAnimationPlaying = true;
         StartCoroutine( ButtonMoveAway() );
     }

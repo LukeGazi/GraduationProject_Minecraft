@@ -42,10 +42,57 @@ public class MapGenerator : MonoBehaviour {
 
     #region 地图参数信息
     public GameObject[] Block; //方块预制体数组
+    private GameObject GetBlock {
+        get {
+            switch (WorldManager.Instance.WorldType) {
+                case "GRASS":
+                    return Block[0];
+                case "STONE":
+                    return Block[1];
+                case "DIRT":
+                    return Block[2];
+                case "MIXED":
+                    return Block[Random.Range( 0, 3 )];
+                default:
+                    return Block[0];
+            }
+        }
+    }
     private int m_mapWidth = 150; //地图宽度
     [SerializeField]
-    private int m_mapHeight = 10; //地图高度
-    public MapGenerateType GenerateType = MapGenerateType.FLAT; //地图生成类型，默认平坦类型
+    //地图高度
+    private int GetMapHeight {
+        get {
+            switch (WorldManager.Instance.TerrainType) {
+                case "FLAT":
+                    return 0;
+                case "HILL":
+                    return 15;
+                case "MOUNTAIN":
+                    return 35;
+                case "RANDOM":
+                    return 15;
+                default:
+                    return 0;
+            }
+        }
+    }
+    //地图生成类型，默认平坦类型
+    public MapGenerateType GetGenerateType {
+        get {
+            switch (WorldManager.Instance.TerrainType) {
+                case "FLAT":
+                    return MapGenerateType.FLAT;
+                case "HILL":
+                case "MOUNTAIN":
+                    return MapGenerateType.PERLIN;
+                case "RANDOM":
+                    return MapGenerateType.RANDOM;
+                default:
+                    return MapGenerateType.FLAT;
+            }
+        }
+    }
 
     private float m_seedTime = 100; //种子信息倍数 
     private float? m_seedX; //种子X
@@ -77,6 +124,7 @@ public class MapGenerator : MonoBehaviour {
 
     // Use this for initialization
     private void Start() {
+        Camera.main.fieldOfView = WorldManager.Instance.CamerViewOfField;
         Cursor.lockState = CursorLockMode.Locked;
         InitiateMap();
     }
@@ -85,7 +133,7 @@ public class MapGenerator : MonoBehaviour {
     /// 初始化地图
     /// </summary>
     private void InitiateMap() {
-        switch (GenerateType) {
+        switch (GetGenerateType) {
             case MapGenerateType.FLAT:
                 m_setBlockHeightDelegate = null;
                 break;
@@ -253,7 +301,7 @@ public class MapGenerator : MonoBehaviour {
     private void GenerateOneColumBlock(int _mapX, int _mapZ) {
         if (!MapManager.IsMapped( _mapX, _mapZ )) {
             MapManager.AddMappedPoint( _mapX, _mapZ );
-            GameObject block = GameObject.Instantiate( Block[0], transform );
+            GameObject block = GameObject.Instantiate( GetBlock, transform );
             block.transform.position = new Vector3( _mapX, 0, _mapZ );
 
 
@@ -262,7 +310,7 @@ public class MapGenerator : MonoBehaviour {
                 height = m_setBlockHeightDelegate( block.transform );
                 if (height > 0) {
                     for (int h = 0; h < height; h++) {
-                        block = GameObject.Instantiate( Block[0], transform );
+                        block = GameObject.Instantiate( GetBlock, transform );
                         block.transform.position = new Vector3( _mapX, h + 1, _mapZ );
                     }
                 }
@@ -284,7 +332,7 @@ public class MapGenerator : MonoBehaviour {
     /// </summary>
     /// <param name="_blockTrans"></param>
     private int GetRandomY(Transform _blockTrans) {
-        float y = Random.Range( 0, m_mapHeight );
+        float y = Random.Range( 0, GetMapHeight );
         return (int)y;
         //_blockTrans.localPosition += Vector3.up * y;
     }
@@ -297,7 +345,7 @@ public class MapGenerator : MonoBehaviour {
         float zSample = ( _blockTrans.localPosition.z + GetSeedZ ) / m_relief;
         //float noise = Mathf.PerlinNoise( xSample, zSample );
         float noise = (float)PerlinNoiseGenerator.PerlinNoise( xSample, zSample );
-        float y = m_mapHeight * noise;
+        float y = GetMapHeight * noise;
         y = Mathf.Round( y ); //取整
         return (int)y;
         //_blockTrans.localPosition += Vector3.up * y;

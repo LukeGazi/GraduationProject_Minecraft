@@ -54,8 +54,19 @@ public class UIInfoManager : Singletons<UIInfoManager> {
     public float SpecifyAudioPanelShrinkSpeed = 0.2f; //音量详细面板收缩速度
     #endregion
 
+    #region SpecifyAudioPanelUI
+    public float RunPanelShrinkError = 0.05f; //音量详细面板收缩误差
+    public float RunPanelShrinkSpeed = 0.15f; //音量详细面板收缩速度
+    #endregion
+
     #region ViewFieldSlider
     public float ViewFieldMin = 40; //视野最低值
     public float ViewFieldMax = 80; //视野最高值
+    #endregion
+
+    #region SingleGamePanelUI
+    public List<string> TerrainTypeList = new List<string>() { "FLAT", "HILL", "MOUNTAIN", "RANDOM" };
+    public List<string> WorldTypeList = new List<string>() { "GRASS", "DIRT", "STONE", "MIXED" };
+    public List<string> SpeciesRichnesList = new List<string>() { "NONE", "LITTLE", "NORMAL", "LARGE" };
     #endregion
 }

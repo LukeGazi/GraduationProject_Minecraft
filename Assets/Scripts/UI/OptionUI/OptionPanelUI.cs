@@ -10,4 +10,11 @@ public class OptionPanelUI : HidenPanelUI {
         NoticeManager.Instance.Register( StrManager.OPTION_PANEL_BACK_NOTICE, PlayMoveBack );
     }
 
+    /// <summary>
+    /// 隐藏
+    /// </summary>
+    private void DisableOptionPanel() {
+        gameObject.SetActive( false );
+    }
+
 }

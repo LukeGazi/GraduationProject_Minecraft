@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-
-public class ViewFieldSlider : MonoBehaviour {
+public class ViewFieldSlider : MonoBehaviour, IPointerUpHandler {
 
     /// <summary>
     /// 获取Slider
@@ -31,7 +31,6 @@ public class ViewFieldSlider : MonoBehaviour {
     /// </summary>
     /// <param name="_value"></param>
     private void ChangeViewSliderValue(float _value) {
-        DebugManager.Log( StrManager.DEBUG_VIEW_CHANGE ); //跨场景修改，参数传递
         ChageTextValue( _value );
     }
 
@@ -49,7 +48,6 @@ public class ViewFieldSlider : MonoBehaviour {
     /// 修改Text显示值
     /// </summary>
     private void ChageTextValue(float _sliderValue) {
-        //ViewValueText.enabled = true;
         ViewValueText.text = GetViewValue( _sliderValue ).ToString();
     }
 
@@ -57,11 +55,15 @@ public class ViewFieldSlider : MonoBehaviour {
     /// 修改照相机视野 
     /// </summary>
     private void ChangeCameraView(float _sliderValue) {
-        Camera.main.fieldOfView = GetViewValue( _sliderValue );
+        WorldManager.Instance.CamerViewOfField = _sliderValue;
     }
 
     private void Awake() {
         AddSliderValueChangeEvents();
+        ViewValueText.text = "";
     }
 
+    public void OnPointerUp(PointerEventData eventData) {
+        ViewValueText.text = "";
+    }
 }

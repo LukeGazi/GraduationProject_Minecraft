@@ -19,7 +19,6 @@ public class SingleGameBtn : StartPanelButtonUI {
     /// </summary>
     /// <param name="eventData"></param>
     public override void OnPointerClick(PointerEventData eventData) {
-        base.OnPointerClick( eventData );
         //若鼠标不可用或正在由动画播放，则不加载动画
         if (!GetInteractable) {
             return;
@@ -27,6 +26,7 @@ public class SingleGameBtn : StartPanelButtonUI {
         if (UIInfoManager.Instance.IsAnimationPlaying) {
             return;
         }
+        base.OnPointerClick( eventData );
         UIInfoManager.Instance.IsAnimationPlaying = true;
         StartCoroutine( ButtonMoveAway() );
     }
