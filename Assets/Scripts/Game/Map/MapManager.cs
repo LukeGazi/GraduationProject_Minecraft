@@ -14,11 +14,11 @@ public class MapManager {
     public static GenerateBorder MapGenerateBorder;
 
     /// <summary>
-    /// 增加已经生成的范围记录
+    /// 记录探测距离
     /// </summary>
     /// <param name="_mapHorizontalDirection">方向</param>
     /// <param name="_distance">增加距离</param>
-    public static void ModifyGenerateRange(MapHorizontalDirection _mapHorizontalDirection, Vector3 _position, int _distance) {
+    public static void ModifyDetectRange(MapHorizontalDirection _mapHorizontalDirection, Vector3 _position, int _distance) {
         switch (_mapHorizontalDirection) {
             case MapHorizontalDirection.FRONT:
                 MapGenerateBorder.Front = (int)_position.z + _distance;

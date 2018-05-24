@@ -43,6 +43,7 @@ public class MapGenerator : MonoBehaviour {
     #region 地图参数信息
     public GameObject[] Block; //方块预制体数组
     private int m_mapWidth = 150; //地图宽度
+    [SerializeField]
     private int m_mapHeight = 10; //地图高度
     public MapGenerateType GenerateType = MapGenerateType.FLAT; //地图生成类型，默认平坦类型
 
@@ -67,9 +68,10 @@ public class MapGenerator : MonoBehaviour {
     }
 
     [SerializeField]
-    private int m_relief = 20; //地图平滑度
+    private int m_relief = 10; //地图平滑度
 
-    public delegate void SetBlockHeightYDelegate(Transform _transform);
+    //设置高度委托
+    public delegate int SetBlockHeightYDelegate(Transform _transform);
     private SetBlockHeightYDelegate m_setBlockHeightDelegate;
     #endregion
 
@@ -88,21 +90,21 @@ public class MapGenerator : MonoBehaviour {
                 m_setBlockHeightDelegate = null;
                 break;
             case MapGenerateType.RANDOM:
-                m_setBlockHeightDelegate = SetRandomY;
+                m_setBlockHeightDelegate = GetRandomY;
                 break;
             case MapGenerateType.PERLIN:
-                m_setBlockHeightDelegate = SetPerlinY;
+                m_setBlockHeightDelegate = GetPerlinY;
                 break;
             default:
                 break;
         }
-        StartCoroutine( GenerateMap() );
+        StartCoroutine( InitOrignalMap() );
     }
 
     /// <summary>
-    /// 生成地图
+    /// 初始化最初地图
     /// </summary>
-    private IEnumerator GenerateMap() {
+    private IEnumerator InitOrignalMap() {
         int generateCount = m_mapWidth / 2;
         for (int row = 0; row < generateCount; row++) {
             StartCoroutine( GenerateMapLineBF( m_mapWidth, row ) );
@@ -121,32 +123,32 @@ public class MapGenerator : MonoBehaviour {
     public void GenerateMapOneLine(MapHorizontalDirection _mapHorizontalDirection, int _count) {
         switch (_mapHorizontalDirection) {
             case MapHorizontalDirection.FRONT:
-                StartCoroutine( GenerateMapLineBF( _count, MapManager.MapGenerateBorder.Front ) );
+                StartCoroutine( GenerateMapRegionFront( _count ) );
                 break;
             case MapHorizontalDirection.RIGHT:
-                StartCoroutine( GenerateMapLineRL( _count, MapManager.MapGenerateBorder.Right ) );
+                StartCoroutine( GenerateMapRegionRight( _count ) );
                 break;
             case MapHorizontalDirection.BACK:
-                StartCoroutine( GenerateMapLineBF( _count, MapManager.MapGenerateBorder.Back ) );
+                StartCoroutine( GenerateMapRegionBack( _count ) );
                 break;
             case MapHorizontalDirection.LEFT:
-                StartCoroutine( GenerateMapLineRL( _count, MapManager.MapGenerateBorder.Left ) );
+                StartCoroutine( GenerateMapRegionLeft( _count ) );
                 break;
             case MapHorizontalDirection.FRONT_AND_RIGHT:
-                StartCoroutine( GenerateMapLineBF( _count, MapManager.MapGenerateBorder.Front ) );
-                StartCoroutine( GenerateMapLineRL( _count, MapManager.MapGenerateBorder.Right ) );
+                StartCoroutine( GenerateMapRegionFront( _count ) );
+                StartCoroutine( GenerateMapRegionRight( _count ) );
                 break;
             case MapHorizontalDirection.FRONT_AND_LEFT:
-                StartCoroutine( GenerateMapLineBF( _count, MapManager.MapGenerateBorder.Front ) );
-                StartCoroutine( GenerateMapLineRL( _count, MapManager.MapGenerateBorder.Left ) );
+                StartCoroutine( GenerateMapRegionFront( _count ) );
+                StartCoroutine( GenerateMapRegionLeft( _count ) );
                 break;
             case MapHorizontalDirection.BACK_AND_RIGHT:
-                StartCoroutine( GenerateMapLineBF( _count, MapManager.MapGenerateBorder.Back ) );
-                StartCoroutine( GenerateMapLineRL( _count, MapManager.MapGenerateBorder.Right ) );
+                StartCoroutine( GenerateMapRegionBack( _count ) );
+                StartCoroutine( GenerateMapRegionRight( _count ) );
                 break;
             case MapHorizontalDirection.BACK_AND_LEFT:
-                StartCoroutine( GenerateMapLineBF( _count, MapManager.MapGenerateBorder.Back ) );
-                StartCoroutine( GenerateMapLineRL( _count, MapManager.MapGenerateBorder.Left ) );
+                StartCoroutine( GenerateMapRegionBack( _count ) );
+                StartCoroutine( GenerateMapRegionLeft( _count ) );
                 break;
             case MapHorizontalDirection.None:
                 return;
@@ -155,43 +157,115 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
-    //地图前后行生成
-    private IEnumerator GenerateMapLineBF(int _count, int _mapZ) {
-        float startX = PlayerTrans.position.x; //起始地图X坐标
-        //从中间开始生成
-        for (int i = 0; i < _count / 2; i++) {
-            GenerateOnBlock( (int)( startX + i ), _mapZ );
-            GenerateOnBlock( (int)( startX - i ), _mapZ );
-            yield return null;
-        }
-        yield return null;
-    }
-
-    //地图左右行生成
-    private IEnumerator GenerateMapLineRL(int _count, int _mapX) {
-        float startZ = PlayerTrans.position.z; //起始地图X坐标
-        //从中间开始生成
-        for (int i = 0; i < _count / 2; i++) {
-            GenerateOnBlock( _mapX, (int)( startZ + i ) );
-            GenerateOnBlock( _mapX, (int)( startZ - i ) );
+    /// <summary>
+    /// 协程动态生成玩家前方地图块
+    /// </summary>
+    /// <param name="_count"></param>
+    /// <returns></returns>
+    private IEnumerator GenerateMapRegionFront(int _count) {
+        for (int i = (int)PlayerTrans.position.z; i < MapManager.MapGenerateBorder.Front; i++) {
+            StartCoroutine( GenerateMapLineBF( _count, i ) );
             yield return null;
         }
         yield return null;
     }
 
     /// <summary>
-    /// 生成一个方块
+    /// 协程动态生成玩家后方地图块
+    /// </summary>
+    /// <param name="_count"></param>
+    /// <returns></returns>
+    private IEnumerator GenerateMapRegionBack(int _count) {
+        //根据玩家的位置信息，从玩家坐标开始往外探测生成
+        for (int i = (int)PlayerTrans.position.z; i > MapManager.MapGenerateBorder.Back; i--) {
+            StartCoroutine( GenerateMapLineBF( _count, i ) );
+            yield return null;
+        }
+        yield return null;
+    }
+
+    /// <summary>
+    /// 协程动态生成玩家右方地图块
+    /// </summary>
+    /// <param name="_count"></param>
+    /// <returns></returns>
+    private IEnumerator GenerateMapRegionRight(int _count) {
+        for (int i = (int)PlayerTrans.position.x; i < MapManager.MapGenerateBorder.Right; i++) {
+            StartCoroutine( GenerateMapLineRL( _count, i ) );
+            yield return null;
+        }
+        yield return null;
+    }
+
+    /// <summary>
+    /// 协程动态生成玩家左方地图块
+    /// </summary>
+    /// <param name="_count"></param>
+    /// <returns></returns>
+    private IEnumerator GenerateMapRegionLeft(int _count) {
+        for (int i = (int)PlayerTrans.position.x; i > MapManager.MapGenerateBorder.Left; i--) {
+            StartCoroutine( GenerateMapLineRL( _count, i ) );
+            yield return null;
+        }
+        yield return null;
+    }
+
+
+    /// <summary>
+    /// 协程生成前后两个方向的方块
+    /// </summary>
+    /// <param name="_count"></param>
+    /// <param name="_mapZ"></param>
+    /// <returns></returns>
+    private IEnumerator GenerateMapLineBF(int _count, int _mapZ) {
+        float startX = PlayerTrans.position.x; //起始地图X坐标
+        //从中间开始生成
+        for (int i = 0; i < _count / 2; i++) {
+            GenerateOneColumBlock( (int)( startX + i ), _mapZ );
+            GenerateOneColumBlock( (int)( startX - i ), _mapZ );
+            yield return null;
+        }
+        yield return null;
+    }
+
+    /// <summary>
+    /// 协程生成左右两个方向的方块
+    /// </summary>
+    /// <param name="_count"></param>
+    /// <param name="_mapZ"></param>
+    /// <returns></returns>
+    private IEnumerator GenerateMapLineRL(int _count, int _mapX) {
+        float startZ = PlayerTrans.position.z; //起始地图X坐标
+        //从中间开始生成
+        for (int i = 0; i < _count / 2; i++) {
+            GenerateOneColumBlock( _mapX, (int)( startZ + i ) );
+            GenerateOneColumBlock( _mapX, (int)( startZ - i ) );
+            yield return null;
+        }
+        yield return null;
+    }
+
+    /// <summary>
+    /// 生成一列方块
     /// </summary>
     /// <param name="_mapX"></param>
     /// <param name="_mapZ"></param>
-    private void GenerateOnBlock(int _mapX, int _mapZ) {
+    private void GenerateOneColumBlock(int _mapX, int _mapZ) {
         if (!MapManager.IsMapped( _mapX, _mapZ )) {
             MapManager.AddMappedPoint( _mapX, _mapZ );
             GameObject block = GameObject.Instantiate( Block[0], transform );
             block.transform.position = new Vector3( _mapX, 0, _mapZ );
 
+
+            int height = 0;
             if (m_setBlockHeightDelegate != null) {
-                m_setBlockHeightDelegate( block.transform );
+                height = m_setBlockHeightDelegate( block.transform );
+                if (height > 0) {
+                    for (int h = 0; h < height; h++) {
+                        block = GameObject.Instantiate( Block[0], transform );
+                        block.transform.position = new Vector3( _mapX, h + 1, _mapZ );
+                    }
+                }
             }
         }
     }
@@ -202,30 +276,31 @@ public class MapGenerator : MonoBehaviour {
     private void AferGenerateMap() {
         PlayerTrans.position = Vector3.up * 10; //玩家位置归零
 
-        MapChecker mapChecker = GetComponent<MapChecker>();
-        mapChecker.StartCheck();
+        NoticeManager.Instance.SendNotice( StrManager.START_CHECK_NOTICE );
     }
 
     /// <summary>
     /// 随机赋值方块高度
     /// </summary>
     /// <param name="_blockTrans"></param>
-    private void SetRandomY(Transform _blockTrans) {
+    private int GetRandomY(Transform _blockTrans) {
         float y = Random.Range( 0, m_mapHeight );
-        _blockTrans.localPosition += Vector3.up * y;
+        return (int)y;
+        //_blockTrans.localPosition += Vector3.up * y;
     }
 
     /// <summary>
     /// 依据柏林噪声算法赋值方块高度
     /// </summary>
-    private void SetPerlinY(Transform _blockTrans) {
+    private int GetPerlinY(Transform _blockTrans) {
         float xSample = ( _blockTrans.localPosition.x + GetSeedX ) / m_relief;
         float zSample = ( _blockTrans.localPosition.z + GetSeedZ ) / m_relief;
         //float noise = Mathf.PerlinNoise( xSample, zSample );
         float noise = (float)PerlinNoiseGenerator.PerlinNoise( xSample, zSample );
         float y = m_mapHeight * noise;
         y = Mathf.Round( y ); //取整
-        _blockTrans.localPosition += Vector3.up * y;
+        return (int)y;
+        //_blockTrans.localPosition += Vector3.up * y;
     }
 
 }

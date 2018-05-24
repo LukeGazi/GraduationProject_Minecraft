@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Demo1_FlatTerrianTest.unity
+- path: Assets/Scenes/StartScene.unity
   isLoaded: 1
   isActive: 1

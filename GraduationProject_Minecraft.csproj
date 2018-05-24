@@ -286,18 +286,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Game\CameraFollower.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapChecker.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapManager.cs" />
-    <Compile Include="Assets\Scripts\Game\Player.cs" />
-    <Compile Include="Assets\Scripts\Tools\BlockSixSideRender.cs" />
-    <Compile Include="Assets\Scripts\Tools\BlockSixSideRenderOne.cs" />
-    <Compile Include="Assets\Scripts\Tools\DebugManager.cs" />
-    <Compile Include="Assets\Scripts\Tools\NoticeManager.cs" />
-    <Compile Include="Assets\Scripts\Tools\PerlinNoiseGenerator.cs" />
-    <Compile Include="Assets\Scripts\Tools\StrManager.cs" />
-    <Compile Include="Assets\Scripts\UI\StartGamePanel.cs" />
+    <Compile Include="Assets\Scripts\Game\Player\CameraFollower.cs" />
+    <Compile Include="Assets\Scripts\Game\Player\CameraViewManager.cs" />
+    <Compile Include="Assets\Scripts\Game\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Tools\Common\DebugManager.cs" />
+    <Compile Include="Assets\Scripts\Tools\Common\KeyValueList.cs" />
+    <Compile Include="Assets\Scripts\Tools\Common\NoticeManager.cs" />
+    <Compile Include="Assets\Scripts\Tools\Common\Singletons.cs" />
+    <Compile Include="Assets\Scripts\Tools\Common\StrManager.cs" />
+    <Compile Include="Assets\Scripts\Tools\Map\BlockSixSideRender.cs" />
+    <Compile Include="Assets\Scripts\Tools\Map\PerlinNoiseGenerator.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\BackBtn.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\CanvasInfos.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\HidenPanelUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\UIInfoManager.cs" />
+    <Compile Include="Assets\Scripts\UI\OptionUI\AudioScrollbar.cs" />
+    <Compile Include="Assets\Scripts\UI\OptionUI\OptionPanelUI.cs" />
+    <Compile Include="Assets\Scripts\UI\OptionUI\SpecifyAudioPanelUI.cs" />
+    <Compile Include="Assets\Scripts\UI\OptionUI\ViewFieldSlider.cs" />
+    <Compile Include="Assets\Scripts\UI\SingleGameUI\SingleGamePanelUI.cs" />
+    <Compile Include="Assets\Scripts\UI\StartUI\BackgroundUI.cs" />
+    <Compile Include="Assets\Scripts\UI\StartUI\OptionBtn.cs" />
+    <Compile Include="Assets\Scripts\UI\StartUI\QuitBtn.cs" />
+    <Compile Include="Assets\Scripts\UI\StartUI\SingleGameBtn.cs" />
+    <Compile Include="Assets\Scripts\UI\StartUI\StartGamePanel.cs" />
+    <Compile Include="Assets\Scripts\UI\StartUI\StartPanelButtonUI.cs" />
+    <Compile Include="Assets\Scripts\UI\StartUI\TitleImageUI.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

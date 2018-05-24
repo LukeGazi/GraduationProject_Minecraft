@@ -19,9 +19,13 @@ public class MapChecker : MonoBehaviour {
         //玩家方向判断需要生成地图的方向
         MapHorizontalDirection playerDirection = player.GetPlayerDirection();
 
-        MapManager.ModifyGenerateRange( playerDirection, PlayerTrans.position, m_checkDistance );
+        MapManager.ModifyDetectRange( playerDirection, PlayerTrans.position, m_checkDistance );
 
         return playerDirection;
+    }
+
+    private void Awake() {
+        NoticeManager.Instance.Register( StrManager.START_CHECK_NOTICE, StartCheck );
     }
 
     private void Start() {
@@ -33,11 +37,19 @@ public class MapChecker : MonoBehaviour {
         StartCoroutine( CheckAndGenerateMap() );
     }
 
+    /// <summary>
+    /// 协程开始检测地图的生成
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator CheckAndGenerateMap() {
         while (Application.isPlaying) {
 
             if (MapGenerateDirection() != MapHorizontalDirection.None) {
-                mapGenerator.GenerateMapOneLine( MapGenerateDirection(), m_loadCount );
+                for (int i = 0; i < m_checkDistance; i++) {
+                    //循环多次检测
+                    mapGenerator.GenerateMapOneLine( MapGenerateDirection(), m_loadCount );
+                    yield return null;
+                }
             }
 
             yield return null;
