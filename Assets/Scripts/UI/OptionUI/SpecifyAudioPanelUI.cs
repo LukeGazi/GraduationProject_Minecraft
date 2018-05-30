@@ -105,4 +105,10 @@ public class SpecifyAudioPanelUI : MonoBehaviour {
         AddSliderValueChangeEvents();
     }
 
+    private void OnDestroy() {
+        //销毁消息
+        NoticeManager.Instance.Unregister( StrManager.SPECIFY_AUDIO_PANEL_SHOW_NOTICE, PlayShowPanel );
+        NoticeManager.Instance.Unregister( StrManager.SPECIFY_AUDIO_PANEL_HIDE_NOTICE, PlayHidePanel );
+    }
+
 }

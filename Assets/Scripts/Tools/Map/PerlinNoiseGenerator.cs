@@ -7,9 +7,16 @@ using UnityEngine;
 /// </summary>
 public class PerlinNoiseGenerator {
 
-    private static float m_persistence = 0.50f; //持续度
-    private static int Number_Of_Octaves = 4; //八度？
 
+    private static float m_persistence = 0.5f; //持续度
+    private static int m_octaves = 4; //倍频，循环次数，越大细节描述约清楚
+
+    /// <summary>
+    /// 获取一个（-1，1）之间的随机数
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     private static float Noise(int x, int y)    // 根据(x,y)获取一个初步噪声值
     {
         int n = x + y * 57;
@@ -17,6 +24,12 @@ public class PerlinNoiseGenerator {
         return (float)( 1.0 - ( ( n * ( n * n * 15731 + 789221 ) + 1376312589 ) & 0x7fffffff ) / 1073741824.0 );
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     static float SmoothedNoise(int x, int y)   //光滑噪声
     {
         float corners = ( Noise( x - 1, y - 1 ) + Noise( x + 1, y - 1 ) + Noise( x - 1, y + 1 ) + Noise( x + 1, y + 1 ) ) / 16;
@@ -48,16 +61,14 @@ public class PerlinNoiseGenerator {
 
     public static double PerlinNoise(float x, float y)    // 最终调用：根据(x,y)获得其对应的PerlinNoise值
     {
-        double total = 0;
-        double p = m_persistence;
-        int n = Number_Of_Octaves;
-        for (int i = 0; i < n; i++) {
+        double result = 0;
+        for (int i = 0; i < m_octaves; i++) {
             double frequency = Mathf.Pow( 2, i );
-            double amplitude = Mathf.Pow( (float)p, i );
-            total = total + InterpolatedNoise( x * (float)frequency, y * (float)frequency ) * amplitude;
+            double amplitude = Mathf.Pow( (float)m_persistence, i );
+            result = result + InterpolatedNoise( x * (float)frequency, y * (float)frequency ) * amplitude;
         }
 
-        return total;
+        return result;
     }
 
 

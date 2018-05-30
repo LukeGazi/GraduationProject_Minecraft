@@ -34,8 +34,35 @@ public class StrManager {
     //Panel Shrink
     public static string SPECIFY_AUDIO_PANEL_SHOW_NOTICE = "Specify audio panel show";
     public static string SPECIFY_AUDIO_PANEL_HIDE_NOTICE = "Specify audio panel hide";
+    //Panel Hide
+    public static string BAG_PANEL_SHOW_NOTICE = "Bag panel show";
+    public static string BAG_PANEL_HIDE_NOTICE = "Bag panel hide";
+    public static string PAUSE_PANEL_SHOW_NOTICE = "Pause panel show";
+    public static string PAUSE_PANEL_HIDE_NOTICE = "Pause panel hide";
+    public static string GAME_OPTION_PANEL_SHOW_NOTICE = "Game option panel show";
+    public static string GAME_OPTION_PANEL_HIDE_NOTICE = "Game option panel hide";
+    public static string ITEMS_TABS_PANEL_SHOW_NOTICE = "Items tabs panel show";
+    public static string ITEMS_TABS_PANEL_HIDE_NOTICE = "Items tabs panel hide";
+    //Image Hide
+    public static string SIGHT_IMAGE_SHOW_NOTICE = "Sight image show";
+    public static string SIGHT_IMAGE_HIDE_NOTICE = "Sight image hide";
     //Load Scene
     public static string LOAD_SCENE_NOTICE = "Load Scene";
+    //Item Selected Image Move
+    public static string ITEM_SELECTED_MOVE_UP_NOTICE = "Item selected move up";
+    public static string ITEM_SELECTED_MOVE_DOWN_NOTICE = "Item selected move down";
+    public static string ITEM_SELECTED_MOVE_BY_NUM_NOTICE = "Item selected move by num";
+    //Item Tabs Show Image
+    public static string ITEM_PANEL_UPDATE_SHOW_NEW_IMAGE_NOTICE = "Item tabs update show new item";
+    //Update Player Hand
+    public static string UPDATE_PLYER_HAND_BLOCK = "Update block in hand of player";
+    //Create Block
+    public static string PLAYER_CREATE_BLOCK_TO_MAP = "Player create new block to map";
+    //Input Manager
+    public static string RETURN_GAME = "Return game";
+    //Camera
+    public static string ALTER_CAMERA_VIEW = "Alter view of main camera";
+    public static string ALTER_VIEW_SLIDER_VALUE = "Alter value of slider about view";
     #endregion
 
     #region DEBUG
@@ -46,5 +73,7 @@ public class StrManager {
     #region TAG
     public static string BUTTON_BACK_OPTION_PANEL = "OptionPanel";
     public static string BUTTON_BACK_SINGLE_GAME_PANEL = "SinglePanel";
+    public static string BAG_BLOCK = "BagBlock";
+    public static string ITEM_BLOCK = "ItemBlock";
     #endregion
 }

@@ -10,6 +10,7 @@ public enum BlockType {
     STONE,
     TREE,
     DIRT,
+    NONE,
 }
 
 /// <summary>
@@ -124,9 +125,8 @@ public class MapGenerator : MonoBehaviour {
 
     // Use this for initialization
     private void Start() {
-        Camera.main.fieldOfView = WorldManager.Instance.CamerViewOfField;
-        Cursor.lockState = CursorLockMode.Locked;
         InitiateMap();
+        CursorManager.Instance.LockCursor();
     }
 
     /// <summary>
@@ -312,6 +312,11 @@ public class MapGenerator : MonoBehaviour {
                     for (int h = 0; h < height; h++) {
                         block = GameObject.Instantiate( GetBlock, transform );
                         block.transform.position = new Vector3( _mapX, h + 1, _mapZ );
+                    }
+                } else {
+                    for (int h = 0; h > height; h--) {
+                        block = GameObject.Instantiate( GetBlock, transform );
+                        block.transform.position = new Vector3( _mapX, h, _mapZ );
                     }
                 }
             }

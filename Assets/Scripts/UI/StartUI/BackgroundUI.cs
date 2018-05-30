@@ -46,6 +46,7 @@ public class BackgroundUI : MonoBehaviour {
 
     private void Start() {
         InitImageSize();
+        AudioManager.Instance.PlayBGMClip();
     }
 
     /// <summary>

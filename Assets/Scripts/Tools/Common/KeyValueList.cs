@@ -19,19 +19,19 @@ public class KeyValueList<K, V> {
     /// <summary>
     /// 添加键值对
     /// </summary>
-    /// <param name="key"></param>
-    /// <param name="target"></param>
+    /// <param name="_key"></param>
+    /// <param name="_target"></param>
     /// <returns></returns>
-    public V Add(K key, V target) {
+    public V Add(K _key, V _target) {
         V result = default( V );
-        if (m_keys.IndexOf( key ) == -1) {
-            m_keys.Add( key );
-            m_values.Add( target );
-            result = target;
+        int index = m_keys.IndexOf( _key );
+        if (index == -1) {
+            m_keys.Add( _key );
+            m_values.Add( _target );
+            result = _target;
         } else {
-            int index = m_keys.IndexOf( key );
             result = m_values[index];
-            m_values[index] = target;
+            m_values[index] = _target;
         }
         return result;
     }
@@ -39,14 +39,14 @@ public class KeyValueList<K, V> {
     /// <summary>
     /// 移出键值对
     /// </summary>
-    /// <param name="key"></param>
+    /// <param name="_key"></param>
     /// <returns></returns>
-    public V Remove(K key) {
+    public V Remove(K _key) {
         V result = default( V );
-        if (m_keys.IndexOf( key ) == -1) {
+        int index = m_keys.IndexOf( _key );
+        if (index == -1) {
             return default( V );
         } else {
-            int index = m_keys.IndexOf( key );
             result = m_values[index];
             m_keys.RemoveAt( index );
             m_values.RemoveAt( index );
@@ -57,11 +57,11 @@ public class KeyValueList<K, V> {
     /// <summary>
     /// 获取键值对
     /// </summary>
-    /// <param name="key"></param>
+    /// <param name="_key"></param>
     /// <returns></returns>
-    public V GetValue(K key) {
+    public V GetValue(K _key) {
         V result = default( V );
-        int index = m_keys.IndexOf( key );
+        int index = m_keys.IndexOf( _key );
         if (index != -1) {
             result = m_values[index];
         }
@@ -75,14 +75,14 @@ public class KeyValueList<K, V> {
     /// <summary>
     /// 索引器
     /// </summary>
-    /// <param name="key"></param>
+    /// <param name="_key"></param>
     /// <returns></returns>
-    public V this[K key] {
+    public V this[K _key] {
         get {
-            return GetValue( key );
+            return GetValue( _key );
         }
         set {
-            Add( key, value );
+            Add( _key, value );
         }
     }
 

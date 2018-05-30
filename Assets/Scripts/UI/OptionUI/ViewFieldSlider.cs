@@ -32,6 +32,7 @@ public class ViewFieldSlider : MonoBehaviour, IPointerUpHandler {
     /// <param name="_value"></param>
     private void ChangeViewSliderValue(float _value) {
         ChageTextValue( _value );
+        ChangeCameraView( GetViewValue( _value ) );
     }
 
     /// <summary>
@@ -42,6 +43,10 @@ public class ViewFieldSlider : MonoBehaviour, IPointerUpHandler {
     private int GetViewValue(float _sliderValue) {
         //40 - 80 / 60
         return (int)( UIInfoManager.Instance.ViewFieldMin + _sliderValue * ( UIInfoManager.Instance.ViewFieldMax - UIInfoManager.Instance.ViewFieldMin ) );
+    }
+    private float GetSliderValue(float _sliderValue) {
+        //40 - 80 / 60
+        return (_sliderValue - UIInfoManager.Instance.ViewFieldMin )/ ( UIInfoManager.Instance.ViewFieldMax );
     }
 
     /// <summary>
@@ -56,11 +61,26 @@ public class ViewFieldSlider : MonoBehaviour, IPointerUpHandler {
     /// </summary>
     private void ChangeCameraView(float _sliderValue) {
         WorldManager.Instance.CamerViewOfField = _sliderValue;
+        NoticeManager.Instance.SendNotice( StrManager.ALTER_CAMERA_VIEW, new object[] { _sliderValue } );
+    }
+
+    /// <summary>
+    /// 修改Slider的value值
+    /// </summary>
+    private void ChangeSliderValue(object[] _value) {
+        float value = (float)_value[0];
+        value = GetSliderValue( value );
+        GetViewFieldSlider.value = value;
     }
 
     private void Awake() {
         AddSliderValueChangeEvents();
         ViewValueText.text = "";
+        NoticeManager.Instance.Register( StrManager.ALTER_VIEW_SLIDER_VALUE, ChangeSliderValue );
+    }
+
+    private void OnDestroy() {
+        NoticeManager.Instance.Unregister( StrManager.ALTER_VIEW_SLIDER_VALUE, ChangeSliderValue );
     }
 
     public void OnPointerUp(PointerEventData eventData) {

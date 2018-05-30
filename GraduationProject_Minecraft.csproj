@@ -286,16 +286,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\CommonMaanager\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\CommonMaanager\CursorManager.cs" />
+    <Compile Include="Assets\Scripts\CommonMaanager\GameInfoManager.cs" />
+    <Compile Include="Assets\Scripts\CommonMaanager\InputManager.cs" />
+    <Compile Include="Assets\Scripts\Game\Blocks\Block.cs" />
+    <Compile Include="Assets\Scripts\Game\Blocks\BlockInfoManager.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapChecker.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapManager.cs" />
     <Compile Include="Assets\Scripts\Game\Player\CameraFollower.cs" />
-    <Compile Include="Assets\Scripts\Game\Player\CameraViewManager.cs" />
     <Compile Include="Assets\Scripts\Game\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Game\World\WorldManager.cs" />
     <Compile Include="Assets\Scripts\Tools\Common\DebugManager.cs" />
     <Compile Include="Assets\Scripts\Tools\Common\KeyValueList.cs" />
+    <Compile Include="Assets\Scripts\Tools\Common\KeyValueParamList.cs" />
     <Compile Include="Assets\Scripts\Tools\Common\NoticeManager.cs" />
     <Compile Include="Assets\Scripts\Tools\Common\Singletons.cs" />
     <Compile Include="Assets\Scripts\Tools\Common\StrManager.cs" />
@@ -306,6 +311,17 @@
     <Compile Include="Assets\Scripts\UI\Common\HidenPanelUI.cs" />
     <Compile Include="Assets\Scripts\UI\Common\RunPanelUI.cs" />
     <Compile Include="Assets\Scripts\UI\Common\UIInfoManager.cs" />
+    <Compile Include="Assets\Scripts\UI\GameUI\BackToPausePanelBtn.cs" />
+    <Compile Include="Assets\Scripts\UI\GameUI\BagBlockImageUI.cs" />
+    <Compile Include="Assets\Scripts\UI\GameUI\BagPanelUI.cs" />
+    <Compile Include="Assets\Scripts\UI\GameUI\BlockTexturesManager.cs" />
+    <Compile Include="Assets\Scripts\UI\GameUI\GameOptionPanelUI.cs" />
+    <Compile Include="Assets\Scripts\UI\GameUI\GameOptionsBtn.cs" />
+    <Compile Include="Assets\Scripts\UI\GameUI\ItemTabsUI.cs" />
+    <Compile Include="Assets\Scripts\UI\GameUI\PausePanelUI.cs" />
+    <Compile Include="Assets\Scripts\UI\GameUI\QuitGameBtn.cs" />
+    <Compile Include="Assets\Scripts\UI\GameUI\ReturnGameBtn.cs" />
+    <Compile Include="Assets\Scripts\UI\GameUI\SigheUI.cs" />
     <Compile Include="Assets\Scripts\UI\OptionUI\AudioScrollbar.cs" />
     <Compile Include="Assets\Scripts\UI\OptionUI\OptionPanelUI.cs" />
     <Compile Include="Assets\Scripts\UI\OptionUI\SpecifyAudioPanelUI.cs" />
@@ -316,7 +332,6 @@
     <Compile Include="Assets\Scripts\UI\StartUI\OptionBtn.cs" />
     <Compile Include="Assets\Scripts\UI\StartUI\QuitBtn.cs" />
     <Compile Include="Assets\Scripts\UI\StartUI\SingleGameBtn.cs" />
-    <Compile Include="Assets\Scripts\UI\StartUI\StartGamePanel.cs" />
     <Compile Include="Assets\Scripts\UI\StartUI\StartPanelButtonUI.cs" />
     <Compile Include="Assets\Scripts\UI\StartUI\TitleImageUI.cs" />
   </ItemGroup>

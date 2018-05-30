@@ -5,12 +5,15 @@ using UnityEngine;
 public class NoticeManager : Singletons<NoticeManager> {
 
     public delegate void NoticeDelegate();
+    public delegate void NoticeWithParamDelegate(object[] _params);
 
-    /// <summary>消息处理器集合。消息名，消息处理器，一个消息名对应多个消息处理器</summary>
+    //消息处理器集合。消息名，消息处理器，一个消息名对应多个消息处理器
     private KeyValueList<string, NoticeDelegate> m_noticesList;
+    private KeyValueParamList<string, NoticeWithParamDelegate, object[]> m_noticesWithParmsList;
 
     public NoticeManager() {
         m_noticesList = new KeyValueList<string, NoticeDelegate>();
+        m_noticesWithParmsList = new KeyValueParamList<string, NoticeWithParamDelegate, object[]>();
     }
 
     /// <summary>
@@ -31,6 +34,19 @@ public class NoticeManager : Singletons<NoticeManager> {
             m_noticesList[_name] = method;
         }
     }
+    public void Register(string _name, NoticeWithParamDelegate _delegate) {
+        if (m_noticesWithParmsList == null || _delegate == null) {
+            return;
+        }
+
+        if (m_noticesWithParmsList.ContainsKey( _name ) && ( m_noticesWithParmsList[_name] != null )) {
+            m_noticesWithParmsList[_name] += _delegate;
+        } else {
+            NoticeWithParamDelegate method = null;
+            method += _delegate;
+            m_noticesWithParmsList[_name] = method;
+        }
+    }
 
     /// <summary>
     /// 注销消息
@@ -45,6 +61,14 @@ public class NoticeManager : Singletons<NoticeManager> {
             }
         }
     }
+    public void Unregister(string _name, NoticeWithParamDelegate _delegate) {
+        if (m_noticesWithParmsList.ContainsKey( _name )) {
+            m_noticesWithParmsList[_name] -= _delegate;
+            if (m_noticesWithParmsList[_name] == null) {
+                m_noticesWithParmsList.Remove( _name );
+            }
+        }
+    }
 
     /// <summary>
     /// 发送消息，执行
@@ -54,8 +78,10 @@ public class NoticeManager : Singletons<NoticeManager> {
         if (m_noticesList.ContainsKey( _name )) {
             m_noticesList[_name]();
         }
-
     }
-
-
+    public void SendNotice(string _name, object[] _params) {
+        if (m_noticesWithParmsList.ContainsKey( _name )) {
+            m_noticesWithParmsList[_name]( _params );
+        }
+    }
 }
